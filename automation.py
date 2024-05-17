@@ -1,7 +1,3 @@
-from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
-from openpyxl.utils import column_index_from_string
-from openpyxl.utils import get_column_letter
-from openpyxl.styles import NamedStyle
 from datetime import datetime
 from pathlib import Path
 import interface
@@ -10,7 +6,7 @@ import shutil
 import csv
 import os
 
-
+template_file_path = "C:\\Users\\Admin\\Desktop\\generates_reports\\template.xlsx"
 
 # Initialize lists
 effective_lease_rate_change_TOA = []
@@ -233,7 +229,6 @@ def main():
     for sheet_name, files in selected_files.items():
         sheets_with_files[sheet_name] = files
 
-    template_file_path = "C:\\Users\\Admin\\Desktop\\excelsa\\excel\\Market Analysis (template).xlsx"
     new_file_path = interface.browse_directory()
     
     new_file_path = copy_file_to_directory(template_file_path, new_file_path)
