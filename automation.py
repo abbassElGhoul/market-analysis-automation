@@ -6,7 +6,6 @@ import shutil
 import csv
 import os
 
-template_file_path = "C:\\Users\\Admin\\Desktop\\generates_reports\\template.xlsx"
 
 # Initialize lists
 effective_lease_rate_change_TOA = []
@@ -220,19 +219,14 @@ def populate_sheet(file_paths, new_file_path, sheet_name):
 def main():
 
     # Call the function to get the selected files from the user interface
+    interface.show_benchmark_warning()
+    template_file_path = interface.get_template_file_path_string()
+    
     selected_files = interface.get_selected_files()
 
-    # Create an empty dictionary to store the selected files
-    sheets_with_files = {}
-
-    # Iterate over the selected files dictionary and populate sheets_with_files
-    for sheet_name, files in selected_files.items():
-        sheets_with_files[sheet_name] = files
-
     new_file_path = interface.browse_directory()
-    
     new_file_path = copy_file_to_directory(template_file_path, new_file_path)
-    for sheet_name, file_paths in sheets_with_files.items():
+    for sheet_name, file_paths in selected_files.items():
         print("sheet_name", sheet_name)
         populate_sheet(file_paths, new_file_path, sheet_name)
 

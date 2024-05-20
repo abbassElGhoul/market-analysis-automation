@@ -1,7 +1,8 @@
 import openpyxl
+from datetime import datetime
 from copy import deepcopy
 
-def add_sheet_to_excel(sheet_name, template_file_path="C:\\Users\\Admin\\Desktop\\generates_reports\\template.xlsx"):
+def add_sheet_to_excel(sheet_name, purchase_date,template_file_path):
     try:
         # Load the existing workbook
         wb = openpyxl.load_workbook(filename=template_file_path)
@@ -20,6 +21,20 @@ def add_sheet_to_excel(sheet_name, template_file_path="C:\\Users\\Admin\\Desktop
             new_chart = deepcopy(chart)
             new_sheet.add_chart(new_chart)
 
+        # Parse the purchase date
+        date_obj = datetime.strptime(purchase_date, "%m/%d/%Y")
+        
+        # Set the purchase date in the specified cells
+        new_sheet['C2'] = date_obj
+        new_sheet['C8'] = date_obj
+        new_sheet['C14'] = date_obj
+        
+                # Apply the desired date format
+        date_format = 'mmm-yy'
+        new_sheet['C2'].number_format = date_format
+        new_sheet['C8'].number_format = date_format
+        new_sheet['C14'].number_format = date_format
+        
         # Save the changes
         wb.save(filename=template_file_path)
         
@@ -29,7 +44,7 @@ def add_sheet_to_excel(sheet_name, template_file_path="C:\\Users\\Admin\\Desktop
         print(f"Error occurred: {e}")
         return False
 
-def remove_sheet_from_excel(sheet_name, template_file_path = "C:\\Users\\Admin\\Desktop\\generates_reports\\template.xlsx"):
+def remove_sheet_from_excel(sheet_name, template_file_path):
     try:
         # Load the Excel template
         wb = openpyxl.load_workbook(template_file_path)
@@ -54,7 +69,7 @@ def remove_sheet_from_excel(sheet_name, template_file_path = "C:\\Users\\Admin\\
         return False
 
 
-def load_sheet_names(file_path, template_file_path = "C:\\Users\\Admin\\Desktop\\generates_reports\\template.xlsx"):
+def load_sheet_names(file_path, template_file_path):
     try:
         # Load the template workbook
         wb = openpyxl.load_workbook(filename=template_file_path)
